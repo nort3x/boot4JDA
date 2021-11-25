@@ -18,18 +18,12 @@ import javax.annotation.PostConstruct;
 public class ABot extends AbstractBot {
 
     public static final String NAME = "ABot";
-    @Autowired
-    ApplicationContext context;
+
     @Value("${cobalt.token}") String token;
 
     @Override
     protected String provideToken() {
         return token;
-    }
-
-    @PostConstruct
-    void construct(){
-        CommandPoolProcessor.observe(getName(),new EventManager(provideJDA(),context));
     }
 
     @Override
