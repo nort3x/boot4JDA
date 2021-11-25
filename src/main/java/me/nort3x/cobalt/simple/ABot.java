@@ -3,6 +3,7 @@ package me.nort3x.cobalt.simple;
 import me.nort3x.cobalt.internals.bots.AbstractBot;
 import me.nort3x.cobalt.internals.events.EventManager;
 import me.nort3x.cobalt.internals.processors.CommandPoolProcessor;
+import me.nort3x.cobalt.internals.processors.DiscordBot;
 import net.dv8tion.jda.api.JDABuilder;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +14,18 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 // once and for all
-@Component
+@DiscordBot
 public class ABot extends AbstractBot {
 
+    public static final String NAME = "ABot";
     @Autowired
     ApplicationContext context;
+    @Value("${cobalt.token}") String token;
 
-    public ABot(@Value("${cobalt.token}") String token) {
-        super(token, LoggerFactory.getLogger(ABot.class));
+    @Override
+    protected String provideToken() {
+        return token;
     }
-
 
     @PostConstruct
     void construct(){
@@ -35,6 +38,6 @@ public class ABot extends AbstractBot {
 
     @Override
     public String getName() {
-        return "a-bot";
+        return NAME;
     }
 }

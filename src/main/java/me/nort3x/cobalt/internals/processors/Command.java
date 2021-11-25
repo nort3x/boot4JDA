@@ -6,5 +6,5 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.METHOD)
 public @interface Command {
-    String forBot() default "ALL";
+    String[] forBot() default {"ALL"};
 }
