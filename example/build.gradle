@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group 'me.nort3x.b4j'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':core')
+    implementation group: 'net.dv8tion', name: 'JDA', version: '5.0.0-alpha.1'
+    implementation 'org.springframework.boot:spring-boot-starter:2.5.6'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}

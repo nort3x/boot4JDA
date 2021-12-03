@@ -1,1 +1,4 @@
-rootProject.name = 'cobalt'
+rootProject.name = 'b4j'
+include 'core'
+include 'example'
+

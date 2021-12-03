@@ -1,37 +1,9 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.6'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
 
-group = 'me.nort3x'
+group = 'me.nort3x.b4j'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '16'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
-repositories {
-//	maven {
-//		name 'm2-dv8tion'
-//		url 'https://m2.dv8tion.net/releases'
-//	}
-	mavenCentral()
-}
-dependencies {
-	implementation fileTree(dir: 'libs', include: '*.jar')
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-test {
-	useJUnitPlatform()
-}
+sourceCompatibility = '17'
+targetCompatibility = '17'
