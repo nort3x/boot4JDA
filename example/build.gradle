@@ -2,8 +2,6 @@ plugins {
     id 'java'
 }
 
-group 'me.nort3x.b4j'
-version '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()

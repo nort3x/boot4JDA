@@ -13,7 +13,6 @@ public class CommandPoolProvider {
     public CommandPoolProvider(ApplicationContext context){
         commandPools = context.getBeansWithAnnotation(CommandPool.class);
     }
-
     public Map<String, Object> getCommandPools() {
         return commandPools;
     }
