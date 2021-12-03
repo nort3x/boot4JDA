@@ -3,8 +3,8 @@ subprojects {
 	apply plugin: 'maven-publish'
 
 
-	sourceCompatibility = '17'
-	targetCompatibility = '17'
+	sourceCompatibility = '11'
+	targetCompatibility = '11'
 
 
 	group = 'me.nort3x.b4j'
