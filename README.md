@@ -30,7 +30,7 @@ Step 2. Add the dependency
 <dependency>
     <groupId>com.github.nort3x</groupId>
     <artifactId>boot4jda</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.1</version>
 </dependency>
 <dependency>
     <groupId>net.dv8tion</groupId>
@@ -61,7 +61,7 @@ allprojects {
 Step 2. Add the dependency
 ```gradle
 dependencies {
-        implementation 'com.github.nort3x:boot4jda:1.0.0'
+        implementation 'com.github.nort3x:boot4jda:1.0.1'
         implementation 'net.dv8tion:JDA:5.0.0-alpha.1' // your version
         implementation 'org.springframework.boot:spring-boot-starter:2.5.6' // your version
 }
