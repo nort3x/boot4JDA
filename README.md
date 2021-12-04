@@ -69,6 +69,44 @@ dependencies {
 
 ## Usage
 
+1 - provide JDA
+```java
+
+@DiscordBot
+public class MyBot extends AbstractBot{
+    // implement methods
+}
+```
+
+2 - provide your commands
+```java
+@CommandPool
+public class MyCommands{
+
+  @Command
+  void response1(MessageRecivedEvent event){ // use any valid JDA listener method signature here
+    // your code
+  }
+
+}
+```
+
+3 - enable B4J 
+
+```java
+
+@EnableB4j
+public class Main{
+
+  public static void main(String[] args){
+    // your code
+  }
+
+}
+```
+
+read examples [here](https://github.com/nort3x/boot4JDA/tree/master/example)
+
 ## Roadmap
 + developing an actual bot with this
 + adding wrappers around popular features for easier configuration
