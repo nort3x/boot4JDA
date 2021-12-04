@@ -1,5 +1,5 @@
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/nort3x/boot4jda.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nort3x/boot4jda/alerts/)
-[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/nort3x/boot4jda.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nort3x/boot4jda/context:java)
+[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/nort3x/boot4JDA.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nort3x/boot4JDA/context:java)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/nort3x/boot4JDA.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nort3x/boot4JDA/alerts/)
 [![](https://jitpack.io/v/nort3x/boot4jda.svg)](https://jitpack.io/#nort3x/boot4jda)
 # boot4jda
 
