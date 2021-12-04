@@ -1,5 +1,5 @@
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/nort3x/boot4jda.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nort3x/boot4jda/alerts/)
-[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/nort3x/boot4jda.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nort3x/boot4jda/context:java)
+[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/nort3x/boot4JDA.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nort3x/boot4JDA/context:java)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/nort3x/boot4JDA.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nort3x/boot4JDA/alerts/)
 [![](https://jitpack.io/v/nort3x/boot4jda.svg)](https://jitpack.io/#nort3x/boot4jda)
 # boot4jda
 
@@ -68,6 +68,44 @@ dependencies {
 ```
 
 ## Usage
+
+1 - provide JDA
+```java
+
+@DiscordBot
+public class MyBot extends AbstractBot{
+    // implement methods
+}
+```
+
+2 - provide your commands
+```java
+@CommandPool
+public class MyCommands{
+
+  @Command
+  void response1(MessageRecivedEvent event){ // use any valid JDA listener method signature here
+    // your code
+  }
+
+}
+```
+
+3 - enable B4J 
+
+```java
+
+@EnableB4j
+public class Main{
+
+  public static void main(String[] args){
+    // your code
+  }
+
+}
+```
+
+read examples [here](https://github.com/nort3x/boot4JDA/tree/master/example)
 
 ## Roadmap
 + developing an actual bot with this
