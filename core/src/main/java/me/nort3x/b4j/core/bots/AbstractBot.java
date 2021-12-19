@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 
 /**
  * used as basis for configuring a Discord Bot instance
@@ -39,10 +41,8 @@ public abstract class AbstractBot implements IBot {
      */
     abstract protected void configure(JDABuilder jdaBuilder);
 
-    public AbstractBot(){
-        buildIfNotExist();
-    }
-
+    
+    @PostConstruct
     private void buildIfNotExist() {
         JDABuilder builder = JDABuilder.createDefault(provideToken());
         // Disable cache for member activities (streaming/games/spotify)
