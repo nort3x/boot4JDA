@@ -9,6 +9,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Component
 @Documented
+@Inherited
 public @interface CommandPool {
     @AliasFor(annotation = Component.class)
     String value() default "";

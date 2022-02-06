@@ -8,7 +8,9 @@ import me.nort3x.b4j.core.events.BasicListener;
 import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.proxy.Proxy;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -79,10 +81,14 @@ public class CommandPoolProcessor {
 
     private Map<String, List<CommandWithNameAndInstance>> getCommands(Object commandPoolInstance) {
 
-        return Arrays.stream(commandPoolInstance.getClass().getDeclaredMethods())
+        if(org.springframework.cglib.proxy.Proxy.isProxyClass(commandPoolInstance.getClass()))
+            commandPoolInstance = ClassUtils.getUserClass(commandPoolInstance);
+
+        Object finalCommandPoolInstance = commandPoolInstance;
+        return Arrays.stream(finalCommandPoolInstance.getClass().getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(Command.class))
                 .peek(method -> method.setAccessible(true))
-                .flatMap(method -> decideWhichCommandForWhichBot(commandPoolInstance, method))
+                .flatMap(method -> decideWhichCommandForWhichBot(finalCommandPoolInstance, method))
                 .peek(method -> logger.info("Discovered Command: " + method.getCommand().getName() + " for " + method.getName()))
                 .collect(
                         Collectors.groupingBy(
