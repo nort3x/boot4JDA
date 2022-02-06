@@ -8,9 +8,7 @@ import me.nort3x.b4j.core.events.BasicListener;
 import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cglib.proxy.Proxy;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -79,16 +77,22 @@ public class CommandPoolProcessor {
 
     }
 
+    private static boolean isProxy(Class<?> o){
+        return o.getSimpleName().contains("$$EnhancerBySpringCGLIB") || o.getSimpleName().contains("$Proxy");
+    }
+
     private Map<String, List<CommandWithNameAndInstance>> getCommands(Object commandPoolInstance) {
 
-        if(org.springframework.cglib.proxy.Proxy.isProxyClass(commandPoolInstance.getClass()))
-            commandPoolInstance = ClassUtils.getUserClass(commandPoolInstance);
+        Class<?> clazz = commandPoolInstance.getClass();
+        while(isProxy(clazz)) {
+            clazz = clazz.getSuperclass();
+        }
 
-        Object finalCommandPoolInstance = commandPoolInstance;
-        return Arrays.stream(finalCommandPoolInstance.getClass().getDeclaredMethods())
+
+        return Arrays.stream(clazz.getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(Command.class))
                 .peek(method -> method.setAccessible(true))
-                .flatMap(method -> decideWhichCommandForWhichBot(finalCommandPoolInstance, method))
+                .flatMap(method -> decideWhichCommandForWhichBot(commandPoolInstance, method))
                 .peek(method -> logger.info("Discovered Command: " + method.getCommand().getName() + " for " + method.getName()))
                 .collect(
                         Collectors.groupingBy(
@@ -99,7 +103,12 @@ public class CommandPoolProcessor {
 
     private static Stream<CommandWithNameAndInstance> decideWhichCommandForWhichBot(Object commandPoolObject, Method command) {
 
-        String[] forPools = commandPoolObject.getClass().getAnnotation(CommandPool.class).forBot();
+        Class<?> clazz = commandPoolObject.getClass();
+        while(isProxy(clazz)) {
+            clazz = clazz.getSuperclass();
+        }
+
+        String[] forPools = clazz.getAnnotation(CommandPool.class).forBot();
         String[] forCommand = command.getAnnotation(Command.class).forBot();
 
         if (Arrays.asList(forPools).contains("ALL")) {
