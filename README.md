@@ -11,6 +11,65 @@
 + easy configuration
 + AOP configurable
 
+
+## Basic Usage
+
+1 - provide JDA
+```java
+
+@DiscordBot
+public class MyBot extends AbstractBot{
+    // implement methods
+}
+```
+
+2 - provide your commands
+```java
+@CommandPool
+public class MyCommands{ 
+  //spring context here
+  @Command
+  void response1(MessageRecivedEvent event){ // use any valid JDA listener method signature here
+    // your logicc
+  }
+  
+  // or go full spring rambo
+  
+  @Command
+  @NotSelf
+  @NotBot
+  @Trigger(value = "help", delimiter = "/", shebang = "~", reflectExceptionMessages = false)
+  @Help(description = "will show help", parameters = {"your thing"})
+  @Authorization(value = {
+          @Authorize(value = "w0lfic", authorizationPrinciple = AuthorizationPrinciple.USER, authorizationDetailType = AuthorizationDetailType.BY_NAME)
+  }, reflectError = true)
+
+  public MessageEmbed help(MessageReceivedEvent messageReceivedEvent, String yourThing) {
+      // or any other return type depending on the generator
+      return (MessageEmbed) generator.getHelpBanner(messageReceivedEvent);
+  }
+
+
+}
+```
+
+3 - enable B4J 
+
+```java
+
+@SpringBootApplication
+@EnableB4j
+public class Main{
+
+  public static void main(String[] args){
+    // your code
+  }
+
+}
+```
+
+read examples more [here](https://github.com/nort3x/boot4JDA/tree/master/example)
+
 ## Install
 
 
@@ -68,46 +127,7 @@ dependencies {
 }
 ```
 
-## Basic Usage
 
-1 - provide JDA
-```java
-
-@DiscordBot
-public class MyBot extends AbstractBot{
-    // implement methods
-}
-```
-
-2 - provide your commands
-```java
-@CommandPool
-public class MyCommands{ 
-  //spring context here
-  @Command
-  void response1(MessageRecivedEvent event){ // use any valid JDA listener method signature here
-    // your logicc
-  }
-
-}
-```
-
-3 - enable B4J 
-
-```java
-
-@SpringBootApplication
-@EnableB4j
-public class Main{
-
-  public static void main(String[] args){
-    // your code
-  }
-
-}
-```
-
-read examples more [here](https://github.com/nort3x/boot4JDA/tree/master/example)
 
 ## Roadmap
 + developing an actual bot with this [not public]
