@@ -6,4 +6,6 @@ open module b4j.example.main {
     requires net.dv8tion.jda;
     requires org.slf4j;
     requires spring.beans;
+    requires spring.context;
+    requires spring.core;
 }

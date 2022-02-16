@@ -3,7 +3,9 @@ package me.nort3x.b4j.core.processors;
 
 import me.nort3x.b4j.core.annotations.Command;
 import me.nort3x.b4j.core.annotations.CommandPool;
+import me.nort3x.b4j.core.aspects.annotation.Help;
 import me.nort3x.b4j.core.bots.IBot;
+import me.nort3x.b4j.core.configurations.HelpBannerGenerator;
 import me.nort3x.b4j.core.events.BasicListener;
 import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
@@ -22,6 +24,8 @@ public class CommandPoolProcessor {
 
     private final Logger logger = LoggerFactory.getLogger(CommandPoolProcessor.class);
     private final Map<String, Set<CommandWithNameAndInstance>> bots_commands_map = new ConcurrentHashMap<>();
+    private final Map<String, Set<HelpBannerGenerator.DescribableMethod>> bots_description = new ConcurrentHashMap<>();
+
 
     public CommandPoolProcessor(CommandPoolProvider provider, List<? extends IBot> bots) {
         analysis(provider.getCommandPools());
@@ -62,14 +66,18 @@ public class CommandPoolProcessor {
 
             getCommands(pool).forEach(
                     (botName, set_methods) -> {
-                        var bot_map = bots_commands_map.computeIfAbsent(
-                                botName,
-                                o -> ConcurrentHashMap.newKeySet()
-                        );
+                        var bot_map = bots_commands_map
+                                .computeIfAbsent(botName, o -> ConcurrentHashMap.newKeySet());
 
-                        bot_map.addAll(
-                                set_methods
-                        );
+                        bot_map.addAll(set_methods);
+
+                        var describable = set_methods.stream()
+                                .filter(x->x.command.isAnnotationPresent(Help.class))
+                                .map(x->new HelpBannerGenerator.DescribableMethod(x.command))
+                                .collect(Collectors.toSet());
+
+                        bots_description.computeIfAbsent(botName,o->ConcurrentHashMap.newKeySet())
+                                .addAll(describable);
                     }
             );
         });
@@ -120,4 +128,11 @@ public class CommandPoolProcessor {
         }
     }
 
+    public Set<HelpBannerGenerator.DescribableMethod> getBotDescribeCommands(IBot bot) {
+        Set<HelpBannerGenerator.DescribableMethod> botSpecificCommands = bots_description.getOrDefault(bot.provideName(),new HashSet<>());
+        Set<HelpBannerGenerator.DescribableMethod> generalCommands = bots_description.getOrDefault("ALL",new HashSet<>());
+        HashSet<HelpBannerGenerator.DescribableMethod> merge = new HashSet<HelpBannerGenerator.DescribableMethod>(generalCommands);
+        merge.addAll(botSpecificCommands);
+        return merge;
+    }
 }

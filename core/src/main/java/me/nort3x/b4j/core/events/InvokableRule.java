@@ -21,7 +21,9 @@ public class InvokableRule {
 
    public void invoke(Object parameter) {
         try {
-            m.invoke(instance, parameter);
+            Object[] params = new Object[m.getParameterCount()];
+            params[0] = parameter;
+            m.invoke(instance, params);
         } catch (Exception e) {
             logger.warn(
                     "Cannot Invoke Rule: " + m.getDeclaringClass().getName() + "." + m.getName() + " Thrown Exception: " ,e

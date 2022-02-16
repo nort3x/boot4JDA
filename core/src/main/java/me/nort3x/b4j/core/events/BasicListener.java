@@ -1,6 +1,7 @@
 package me.nort3x.b4j.core.events;
 
 
+import me.nort3x.b4j.core.aspects.annotation.Trigger;
 import net.dv8tion.jda.api.events.*;
 import net.dv8tion.jda.api.events.application.ApplicationCommandCreateEvent;
 import net.dv8tion.jda.api.events.application.ApplicationCommandDeleteEvent;
@@ -75,8 +76,8 @@ public class BasicListener extends ListenerAdapter {
 
     public boolean addRule(Method m, Object o) {
         Parameter[] parameters = m.getParameters();
-        if (parameters.length != 1) {
-            logger.warn("Rule method should only accept 'one parameter' of event type : " + m.getDeclaringClass().getName() + "." + m.getName() + " is Rejected");
+        if (parameters.length != 1 && !m.isAnnotationPresent(Trigger.class)) {
+            logger.warn("non trigger command method should only accept 'one parameter' of event type : " + m.getDeclaringClass().getName() + "." + m.getName() + " is Rejected");
             return false;
         }
         Class<?> type = parameters[0].getType();

@@ -4,11 +4,12 @@
 # boot4jda
 
 ## features
-+ easy integration with spring-boot
-+ supports everything JDA supports
-+ supports multi-bot
++ integration with springboot
++ compatible with spring DI context
++ supports multiple bots and code reuse
 + supports intercommunication within bots
 + easy configuration
++ AOP configurable
 
 ## Install
 
@@ -67,7 +68,7 @@ dependencies {
 }
 ```
 
-## Usage
+## Basic Usage
 
 1 - provide JDA
 ```java
@@ -81,11 +82,11 @@ public class MyBot extends AbstractBot{
 2 - provide your commands
 ```java
 @CommandPool
-public class MyCommands{
-
+public class MyCommands{ 
+  //spring context here
   @Command
   void response1(MessageRecivedEvent event){ // use any valid JDA listener method signature here
-    // your code
+    // your logicc
   }
 
 }
@@ -95,6 +96,7 @@ public class MyCommands{
 
 ```java
 
+@SpringBootApplication
 @EnableB4j
 public class Main{
 
@@ -105,12 +107,11 @@ public class Main{
 }
 ```
 
-read examples [here](https://github.com/nort3x/boot4JDA/tree/master/example)
+read examples more [here](https://github.com/nort3x/boot4JDA/tree/master/example)
 
 ## Roadmap
-+ developing an actual bot with this
-+ adding wrappers around popular features for easier configuration
-+ adding more third-party libraries if needed
++ developing an actual bot with this [not public]
++ adding wrappers around popular features for easier configuration [X]
 
 ## Donation
 if you liked **B4J** you can buy me a coffee [here](https://github.com/nort3x/nort3x/tree/main/donate) as a token of apperiation.
