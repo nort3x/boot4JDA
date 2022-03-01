@@ -2,7 +2,7 @@ package me.nort3x.b4j.core.aspects.adaptors;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.Event;
-import net.dv8tion.jda.api.events.interaction.GenericComponentInteractionCreateEvent;
+import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 

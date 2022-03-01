@@ -2,8 +2,8 @@ package me.nort3x.b4j.core.aspects.adaptors;
 
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.Event;
-import net.dv8tion.jda.api.events.interaction.GenericComponentInteractionCreateEvent;
 import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
+import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
 public class MessageChannelAnalyzer {
@@ -14,7 +14,6 @@ public class MessageChannelAnalyzer {
     }
 
     public boolean isSupported(){
-        GenericComponentInteractionCreateEvent m;
         return event instanceof GenericMessageEvent ||
                 event instanceof GenericComponentInteractionCreateEvent;
     }

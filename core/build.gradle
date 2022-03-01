@@ -22,7 +22,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation group: 'net.dv8tion', name: 'JDA', version: '5.0.0-alpha.1'
+    implementation group: 'net.dv8tion', name: 'JDA', version: '5.0.0-alpha.9'
     compileOnly 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.springframework.boot:spring-boot-starter-aop'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

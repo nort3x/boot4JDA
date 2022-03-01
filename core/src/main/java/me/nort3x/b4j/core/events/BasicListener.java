@@ -3,10 +3,6 @@ package me.nort3x.b4j.core.events;
 
 import me.nort3x.b4j.core.aspects.annotation.Trigger;
 import net.dv8tion.jda.api.events.*;
-import net.dv8tion.jda.api.events.application.ApplicationCommandCreateEvent;
-import net.dv8tion.jda.api.events.application.ApplicationCommandDeleteEvent;
-import net.dv8tion.jda.api.events.application.ApplicationCommandUpdateEvent;
-import net.dv8tion.jda.api.events.application.GenericApplicationCommandEvent;
 import net.dv8tion.jda.api.events.channel.ChannelCreateEvent;
 import net.dv8tion.jda.api.events.channel.ChannelDeleteEvent;
 import net.dv8tion.jda.api.events.channel.GenericChannelEvent;
@@ -31,6 +27,10 @@ import net.dv8tion.jda.api.events.guild.update.*;
 import net.dv8tion.jda.api.events.guild.voice.*;
 import net.dv8tion.jda.api.events.http.HttpRequestEvent;
 import net.dv8tion.jda.api.events.interaction.*;
+import net.dv8tion.jda.api.events.interaction.command.*;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent;
+import net.dv8tion.jda.api.events.interaction.component.SelectMenuInteractionEvent;
 import net.dv8tion.jda.api.events.message.*;
 import net.dv8tion.jda.api.events.message.react.*;
 import net.dv8tion.jda.api.events.role.GenericRoleEvent;
@@ -85,13 +85,92 @@ public class BasicListener extends ListenerAdapter {
         return true;
     }
 
+    @Override
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(SlashCommandInteractionEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
+    }
 
     @Override
-    public void onSelectionMenu(SelectionMenuEvent event) {
-        Optional.ofNullable(parameterTypeToMethods.getOrDefault(SelectionMenuEvent.class, null))
-                .ifPresent(set ->
+    public void onUserContextInteraction(UserContextInteractionEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(UserContextInteractionEvent.class,null))
+                .ifPresent(set->
                         set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
-                );
+                        );
+    }
+
+    @Override
+    public void onMessageContextInteraction(MessageContextInteractionEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(MessageContextInteractionEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
+    }
+
+    @Override
+    public void onButtonInteraction(ButtonInteractionEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(ButtonInteractionEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
+    }
+
+    @Override
+    public void onSelectMenuInteraction(SelectMenuInteractionEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(SelectMenuInteractionEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
+    }
+
+    @Override
+    public void onCommandAutoCompleteInteraction(CommandAutoCompleteInteractionEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(CommandAutoCompleteInteractionEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
+    }
+
+    @Override
+    public void onGuildMemberUpdateTimeOut(GuildMemberUpdateTimeOutEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(GuildMemberUpdateTimeOutEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
+    }
+
+    @Override
+    public void onGenericAutoCompleteInteraction(GenericAutoCompleteInteractionEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(GenericAutoCompleteInteractionEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
+    }
+
+    @Override
+    public void onGenericComponentInteractionCreate(GenericComponentInteractionCreateEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(GenericComponentInteractionCreateEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
+    }
+
+    @Override
+    public void onGenericCommandInteraction(GenericCommandInteractionEvent event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(GenericCommandInteractionEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
+    }
+
+    @Override
+    public void onGenericContextInteraction(GenericContextInteractionEvent<?> event) {
+        Optional.ofNullable(parameterTypeToMethods.getOrDefault(GenericContextInteractionEvent.class,null))
+                .ifPresent(set->
+                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
+                        );
     }
 
     @Override
@@ -334,13 +413,6 @@ public class BasicListener extends ListenerAdapter {
                 );
     }
 
-    @Override
-    public void onGenericComponentInteractionCreate(GenericComponentInteractionCreateEvent event) {
-        Optional.ofNullable(parameterTypeToMethods.getOrDefault(GenericComponentInteractionCreateEvent.class, null))
-                .ifPresent(set ->
-                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
-                );
-    }
 
     @Override
     public void onGenericStageInstance(GenericStageInstanceEvent event) {
@@ -478,45 +550,6 @@ public class BasicListener extends ListenerAdapter {
                 );
     }
 
-    @Override
-    public void onSlashCommand(SlashCommandEvent event) {
-        Optional.ofNullable(parameterTypeToMethods.getOrDefault(SlashCommandEvent.class, null))
-                .ifPresent(set ->
-                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
-                );
-    }
-
-    @Override
-    public void onButtonClick(ButtonClickEvent event) {
-        Optional.ofNullable(parameterTypeToMethods.getOrDefault(ButtonClickEvent.class, null))
-                .ifPresent(set ->
-                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
-                );
-    }
-
-    @Override
-    public void onApplicationCommandUpdate(ApplicationCommandUpdateEvent event) {
-        Optional.ofNullable(parameterTypeToMethods.getOrDefault(ApplicationCommandUpdateEvent.class, null))
-                .ifPresent(set ->
-                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
-                );
-    }
-
-    @Override
-    public void onApplicationCommandDelete(ApplicationCommandDeleteEvent event) {
-        Optional.ofNullable(parameterTypeToMethods.getOrDefault(ApplicationCommandDeleteEvent.class, null))
-                .ifPresent(set ->
-                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
-                );
-    }
-
-    @Override
-    public void onApplicationCommandCreate(ApplicationCommandCreateEvent event) {
-        Optional.ofNullable(parameterTypeToMethods.getOrDefault(ApplicationCommandCreateEvent.class, null))
-                .ifPresent(set ->
-                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
-                );
-    }
 
     @Override
     public void onUserUpdateName(UserUpdateNameEvent event) {
@@ -1265,13 +1298,6 @@ public class BasicListener extends ListenerAdapter {
                 );
     }
 
-    @Override
-    public void onGenericApplicationCommand(GenericApplicationCommandEvent event) {
-        Optional.ofNullable(parameterTypeToMethods.getOrDefault(GenericApplicationCommandEvent.class, null))
-                .ifPresent(set ->
-                        set.parallelStream().forEach(invokableRule -> invokableRule.invoke(event))
-                );
-    }
 
     @Override
     public void onGenericInteractionCreate(GenericInteractionCreateEvent event) {

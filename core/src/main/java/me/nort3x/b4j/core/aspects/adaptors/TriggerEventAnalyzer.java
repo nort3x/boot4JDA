@@ -2,7 +2,7 @@ package me.nort3x.b4j.core.aspects.adaptors;
 
 import me.nort3x.b4j.core.aspects.annotation.Trigger;
 import net.dv8tion.jda.api.events.Event;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 
@@ -14,14 +14,14 @@ public class TriggerEventAnalyzer {
     }
 
     public boolean isSupported() {
-        return event instanceof SlashCommandEvent ||
+        return event instanceof SlashCommandInteractionEvent ||
                 event instanceof MessageReceivedEvent ||
                 event instanceof MessageReactionAddEvent;
     }
 
     public boolean canBeTriggeredBy(Trigger trigger) {
-        if (event instanceof SlashCommandEvent) {
-            return ((SlashCommandEvent) event).getCommandPath().startsWith(trigger.value());
+        if (event instanceof SlashCommandInteractionEvent) {
+            return ((SlashCommandInteractionEvent) event).getCommandPath().startsWith(trigger.value());
         } else if (event instanceof MessageReceivedEvent) {
             return ((MessageReceivedEvent) event).getMessage().getContentRaw().startsWith(trigger.shebang() + trigger.value());
         } else if (event instanceof MessageReactionAddEvent) {
@@ -31,8 +31,8 @@ public class TriggerEventAnalyzer {
     }
 
     public String[] getListOfParams(Trigger trigger){
-        if (event instanceof SlashCommandEvent) {
-            return ((SlashCommandEvent) event).getCommandPath()
+        if (event instanceof SlashCommandInteractionEvent) {
+            return ((SlashCommandInteractionEvent) event).getCommandPath()
                     .replace(trigger.value(),"")
                     .split(trigger.delimiter());
         } else if (event instanceof MessageReceivedEvent) {
